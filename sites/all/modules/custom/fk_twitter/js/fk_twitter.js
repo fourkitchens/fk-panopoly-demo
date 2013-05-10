@@ -12,9 +12,6 @@
         var x = 0;
         var last = 0;
 
-        tweets.hide();
-        tweets[0].show();
-
         /**
          * Creates a show/hide circular loop on the tweet
          * list items.
@@ -31,7 +28,9 @@
           }
 
           $(tweets[last]).fadeOut(function() {
+            $(this).removeClass('shown').addClass('hidden');
             $(tweets[x]).fadeIn(function() {
+              $(this).removeClass('hidden').addClass('shown');
               last = x;
               if ((x + 1) === tweets.length) {
                 x = 0;
