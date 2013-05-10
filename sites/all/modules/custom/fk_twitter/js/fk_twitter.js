@@ -12,6 +12,9 @@
         var x = 0;
         var last = 0;
 
+        tweets.hide();
+        tweets[0].show();
+
         /**
          * Creates a show/hide circular loop on the tweet
          * list items.
