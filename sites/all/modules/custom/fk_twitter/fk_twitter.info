@@ -1,0 +1,6 @@
+name = 4K Twitter
+description = Twitter extensions for 4K.
+package = 4K
+dependencies[] = twitter
+dependencies[] = twitter_pull
+core = 7.x
