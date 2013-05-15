@@ -8,16 +8,16 @@
  * @param $hook
  *   The name of the template being rendered ("maintenance_page" in this case.)
  */
-function aurora-demo_preprocess_maintenance_page(&$vars, $hook) {
+function aurora_demo_preprocess_maintenance_page(&$vars, $hook) {
   // When a variable is manipulated or added in preprocess_html or
   // preprocess_page, that same work is probably needed for the maintenance page
   // as well, so we can just re-use those functions to do that work here.
-  // aurora-demo_preprocess_html($variables, $hook);
-  // aurora-demo_preprocess_page($variables, $hook);
+  // aurora_demo_preprocess_html($variables, $hook);
+  // aurora_demo_preprocess_page($variables, $hook);
 
   // This preprocessor will also be used if the db is inactive. To ensure your
   // theme is used, add the following line to your settings.php file:
-  // $conf['maintenance_theme'] = 'aurora-demo';
+  // $conf['maintenance_theme'] = 'aurora_demo';
   // Also, check $vars['db_is_active'] before doing any db queries.
 }
 
@@ -27,12 +27,12 @@ function aurora-demo_preprocess_maintenance_page(&$vars, $hook) {
  * @return
  *   An array to be output as yepnope testObjects.
  */
-function aurora-demo_modernizr_load_alter(&$load) {
+function aurora_demo_modernizr_load_alter(&$load) {
 
   // We will check for touch events, and if we do load the hammer.js script.
   $load[] = array(
     'test' => 'Modernizr.touch',
-    'yep'  => array('/'. drupal_get_path('theme','aurora-demo') . '/javascripts/hammer.js'),
+    'yep'  => array('/'. drupal_get_path('theme','aurora_demo') . '/javascripts/hammer.js'),
   );
 
   return $load;
@@ -47,7 +47,7 @@ function aurora-demo_modernizr_load_alter(&$load) {
  *   The name of the template being rendered ("html" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_html(&$vars) {
+function aurora_demo_preprocess_html(&$vars) {
 
 }
 
@@ -60,7 +60,7 @@ function aurora-demo_preprocess_html(&$vars) {
  *   The name of the template being rendered ("page" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_page(&$vars) {
+function aurora_demo_preprocess_page(&$vars) {
 
 }
 
@@ -73,7 +73,7 @@ function aurora-demo_preprocess_page(&$vars) {
  *   The name of the template being rendered ("region" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_region(&$vars, $hook) {
+function aurora_demo_preprocess_region(&$vars, $hook) {
 
 }
 // */
@@ -87,7 +87,7 @@ function aurora-demo_preprocess_region(&$vars, $hook) {
  *   The name of the template being rendered ("block" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_block(&$vars, $hook) {
+function aurora_demo_preprocess_block(&$vars, $hook) {
 
 }
 // */
@@ -101,7 +101,7 @@ function aurora-demo_preprocess_block(&$vars, $hook) {
  *   The name of the template being rendered ("entity" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_entity(&$vars, $hook) {
+function aurora_demo_preprocess_entity(&$vars, $hook) {
 
 }
 // */
@@ -115,7 +115,7 @@ function aurora-demo_preprocess_entity(&$vars, $hook) {
  *   The name of the template being rendered ("node" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_node(&$vars, $hook) {
+function aurora_demo_preprocess_node(&$vars, $hook) {
   $node = $vars['node'];
 }
 // */
@@ -129,7 +129,7 @@ function aurora-demo_preprocess_node(&$vars, $hook) {
  *   The name of the template being rendered ("field" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_field(&$vars, $hook) {
+function aurora_demo_preprocess_field(&$vars, $hook) {
 
 }
 // */
@@ -143,7 +143,7 @@ function aurora-demo_preprocess_field(&$vars, $hook) {
  *   The name of the template being rendered ("comment" in this case.)
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_comment(&$vars, $hook) {
+function aurora_demo_preprocess_comment(&$vars, $hook) {
   $comment = $vars['comment'];
 }
 // */
@@ -155,7 +155,7 @@ function aurora-demo_preprocess_comment(&$vars, $hook) {
  *   An array of variables to pass to the theme template.
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_preprocess_views_view(&$vars) {
+function aurora_demo_preprocess_views_view(&$vars) {
   $view = $vars['view'];
 }
 // */
@@ -168,7 +168,7 @@ function aurora-demo_preprocess_views_view(&$vars) {
  *   An array of all CSS items being requested on the page.
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_css_alter(&$css) {
+function aurora_demo_css_alter(&$css) {
 
 }
 // */
@@ -180,7 +180,7 @@ function aurora-demo_css_alter(&$css) {
  *   An array of all JavaScript being presented on the page.
  */
 /* -- Delete this line if you want to use this function
-function aurora-demo_js_alter(&$js) {
+function aurora_demo_js_alter(&$js) {
 
 }
 // */
