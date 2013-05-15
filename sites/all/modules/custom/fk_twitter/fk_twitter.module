@@ -1,0 +1,104 @@
+<?php
+
+/**
+ * @file
+ * 4K Twitter extensions.
+ */
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function fk_twitter_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && $plugin == 'content_types') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Implements hook_twitter_pull_modify().
+ */
+function fk_twitter_twitter_pull_tweets_alter($twitkey, $num_items, &$tweets) {
+  if (!is_array($tweets)) {
+    return;
+  }
+
+  $tweets = _fk_twitter_pull_tweets($twitkey, $num_items, $num_items, $tweets);
+
+  foreach ($tweets as &$tweet) {
+    $tweet->time = format_date($tweet->timestamp, 'custom', 'g:i A - j M y');
+    $tweet->time_options = array();
+    $tweet->classes = 'hidden';
+
+    // Only use time-ago if the tweet is less than 24 hours
+    // old.
+    if (REQUEST_TIME - $tweet->timestamp < 86400) {
+      $tweet->time = '<span class="moment">' . format_date($tweet->timestamp) . '</span>';
+      $tweet->time_options = array('html' => TRUE);
+    }
+  }
+
+  // Set a first class on the first tweet.
+  reset($tweets);
+  $tweets[key($tweets)]->classes = 'first shown';
+
+  drupal_add_js('//platform.twitter.com/widgets.js', 'external');
+  drupal_add_js(drupal_get_path('module', 'fk_twitter') . '/js/fk_twitter.js');
+}
+
+/**
+ * Helper function to filter out @ replies and make sure
+ * that the resulting list of tweets is still the correct
+ * length.
+ *
+ * @param $twitkey
+ *   The original twitkey passed to twitter_pull_retrieve().
+ * @param $original_num_items
+ *   The original number of tweets to collect passed to twitter_pull_retrieve().
+ * @param $new_num_items
+ *   The number of items collected at the last recursive call of this function.
+ * @param $tweets
+ *   The array of tweets to filter for @ replies.
+ * @return
+ *   An array of filtered tweets.
+ */
+function _fk_twitter_pull_tweets($twitkey, $original_num_items, $new_num_items, $tweets) {
+  // Strip out any @ replies.
+  foreach ($tweets as $k => &$tweet) {
+    if (strpos($tweet->text, '@') === 0) {
+      unset($tweets[$k]);
+    }
+  }
+
+  // Reset the array keys.
+  $tweets = array_values($tweets);
+
+  if (sizeof($tweets) < $original_num_items) {
+    // Increase the number of tweets to collect by the number of tweets
+    // originally collected.
+    $new_num_items = $new_num_items + $original_num_items;
+    $new_tweets = twitter_pull_retrieve(
+      $twitkey,
+      $new_num_items
+    );
+    if (is_array($new_tweets)) {
+      $new_tweets = array_slice($new_tweets, $new_num_items - $original_num_items);
+    }
+
+    if (is_array($new_tweets) && sizeof($new_tweets) > 0) {
+      // Now filter the new tweets and expand that if necessary.
+      $new_tweets = _fk_twitter_pull_tweets(
+        $twitkey,
+        $original_num_items,
+        $new_num_items,
+        $new_tweets
+      );
+      for ($x = 0; $x < sizeof($new_tweets), sizeof($tweets) < $original_num_items; $x++) {
+        $tweets[] = $new_tweets[$x];
+      }
+    }
+  }
+
+  return $tweets;
+}
+
+

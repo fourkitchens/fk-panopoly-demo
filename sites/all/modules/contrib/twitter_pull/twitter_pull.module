@@ -114,7 +114,7 @@ function twitter_pull_render($twitkey, $title = NULL, $num_items = NULL, $themek
     drupal_add_js('jQuery(document).ready(function () { jQuery.get("' . $uri . '", function(data) { jQuery("#'. $id . '").html(data).removeClass("throbber"); }); });', 'inline');
   }
 
-  module_invoke_all('twitter_pull_modify', $tweets);
+  drupal_alter('twitter_pull_tweets', $twitkey, $num_items, $tweets);
 
   $ret = theme($themekey, array('tweets' => $tweets, 'twitkey' => $twitkey, 'title' => $title, 'lazy_load' => $lazy_load));
 
